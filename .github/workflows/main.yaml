@@ -1,0 +1,32 @@
+# .github/workflows/main.yaml
+
+name: CI/CD for Guestbook App
+
+# Pemicu: Jalankan workflow setiaip push ke branch 'main'
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # Jalankan di server virtual Linux
+
+    steps:
+    # 1. Checkout kode dari repositori GitHub
+    - name: Check out the repo
+      uses: actions/checkout@v4
+
+    # 2. Login ke Docker Hub menggunakan Secrets
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # 3. Build dan push image Docker
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./guestbook-app # Menunjuk ke folder aplikasi Flask
+        push: true               # Langsung push ke Docker Hub
+        tags: alfredmanurung/guestbook-frontend:v1 

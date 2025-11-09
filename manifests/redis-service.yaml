@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service #
+metadata:
+  name: redis-service # Nama ini HARUS SAMA dengan 'REDIS_HOST'
+spec:
+  type: ClusterIP # Hanya bisa diakses di dalam klaster
+  selector:
+    app: redis # Mencari Pod dengan label 'app: redis'
+  ports:
+  - protocol: TCP
+    port: 6379        # Port yang dilihat oleh service lain
+    targetPort: 6379  # Port di dalam kontainer Redis

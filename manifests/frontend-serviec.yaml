@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service #
+metadata:
+  name: frontend-service
+spec:
+  type: NodePort # Akan mengekspos service di sebuah port pada Node
+  selector:
+    app: guestbook # Mencari Pod dengan label 'app: guestbook'
+  ports:
+  - protocol: TCP
+    port: 80 # Port internal service
+    targetPort: 5000 # Port di dalam kontainer Flask
+    # NodePort akan dialokasikan secara otomatis (range 30000-32767)

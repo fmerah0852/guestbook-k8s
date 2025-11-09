@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment #
+metadata:
+  name: frontend-deployment
+  labels:
+    app: guestbook
+spec:
+  replicas: 3 # Kita jalankan 3 pod untuk demonstrasi skalabilitas
+  selector:
+    matchLabels:
+      app: guestbook
+  template:
+    metadata:
+      labels:
+        app: guestbook #
+    spec:
+      containers:
+      - name: guestbook-frontend
+        image: alfredmanurung/guestbook-frontend:v1 # Image yang akan kita build
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 5000 # Port yang diekspos di app.py
+        env:
+        - name: REDIS_HOST # Ini adalah environment variable
+          value: "redis-service" # Menunjuk ke Service Redis kita

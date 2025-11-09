@@ -1,0 +1,17 @@
+# k8s-manifests/guestbook-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook-ingress
+spec:
+  rules:
+  - host: "guestbook.test"  # Nama domain yang akan kita gunakan
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service  # Arahkan ke service frontend kita
+            port:
+              number: 80              # Arahkan ke port 80 di service itu
